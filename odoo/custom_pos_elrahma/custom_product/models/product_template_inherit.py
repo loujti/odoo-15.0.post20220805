@@ -9,12 +9,15 @@ from odoo import api, fields, models, tools, _, SUPERUSER_ID
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    list_price = fields.Float(
-        'Sales Price', default=1.0,
-        digits='Product Price', compute="_compute_price_ttc"
-    )
+    #
+    # @api.onchange('list_price','tax_string')
+    # def _onchange_list_price(self):
+    #     if self.list_price and self.tax_string:
+    #         self.list_price = self.list_price + self.taxes_id.amount
+    #         self.tax_string=self._construct_tax_string(self.list_price + self.taxes_id.amount)
 
-    def _compute_price_ttc(self):
-        if self.list_price and self.taxes_id:
-            self.list_price = self.list_price + self.taxes_id.amount
-        return self.list_price
+    #
+    # @api.depends('taxes_id', 'list_price')
+    # def _compute_tax_string(self):
+    #     for record in self:
+    #         record.tax_string = record._construct_tax_string(record.list_price + record.taxes_id.amount)
